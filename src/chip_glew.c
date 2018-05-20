@@ -76,7 +76,6 @@ void init_texture_glew()
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DITHER);
 	glDisable(GL_BLEND);
-    return 1;
 }
 
 void update_texture_glew()
@@ -94,14 +93,14 @@ void update_texture_glew()
     }
 
     //Print display matrix to console
-    print_display();
+    //print_display();
 
     glClear(GL_COLOR_BUFFER_BIT);
 
     glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 64, 32, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)screen_data);
     
 	// Update Texture
-    //glDrawPixels(display_width, display_height, GL_RGB, GL_UNSIGNED_BYTE, screen_data);
+    //glDrawPixels(display_width, display_height, GL_RGB, GL_UNSIGNED_BYTE,(GLvoid*) screen_data);
 	/*glBegin(GL_QUADS);
 		glTexCoord2d(0.0f, 0.0f);	glVertex2d(-1.0f, -1.0f);
 		glTexCoord2d(1.0f, 0.0f); 	glVertex2d(1.0f, -1.0f);
@@ -109,13 +108,58 @@ void update_texture_glew()
 		glTexCoord2d(0.0f, 1.0f); 	glVertex2d(-1.0f, DISPLAY_HEIGHT);
 	glEnd();*/
     glBegin(GL_QUADS);
-        glTexCoord2d(0.0, 0.0);		glVertex2d(0.0, 0.0);
-        glTexCoord2d(1.0, 0.0); 	glVertex2d(64*10, 0.0);
-        glTexCoord2d(1.0, 1.0); 	glVertex2d(64*10, 32*10);
-        glTexCoord2d(0.0, 1.0); 	glVertex2d(0.0,	32*10);
+        glTexCoord2d(0.0f, 0.0f);	glVertex2d(0.0f, 0.0f);
+        glTexCoord2d(1.0f, 0.0f); 	glVertex2d(64*10, 0.0f);
+        glTexCoord2d(1.0f, 1.0f); 	glVertex2d(64*10, 32*10);
+        glTexCoord2d(0.0f, 1.0f); 	glVertex2d(0.0f, 32*10);
     glEnd();
     
     SDL_GL_SwapWindow(window);
+}
+
+void handle_input(SDL_Event event)
+{
+    if(event.type == SDL_KEYDOWN) {
+        printf("Key pressed: %c\n", event.key.keysym.sym);
+        switch(event.key.keysym.sym) {
+            case SDLK_x: key[0] = 1; break;
+            case SDLK_a: key[1] = 1; break;
+            case SDLK_s: key[2] = 1; break;
+            case SDLK_d: key[3] = 1; break;
+            case SDLK_q: key[4] = 1; break;
+            case SDLK_w: key[5] = 1; break;
+            case SDLK_e: key[6] = 1; break;
+            case SDLK_1: key[7] = 1; break;
+            case SDLK_2: key[8] = 1; break;
+            case SDLK_3: key[9] = 1; break;
+            case SDLK_z: key[10] = 1; break;
+            case SDLK_c: key[11] = 1; break;
+            case SDLK_4: key[12] = 1; break;
+            case SDLK_r: key[13] = 1; break;
+            case SDLK_f: key[14] = 1; break;
+            case SDLK_v: key[15] = 1; break;
+        }
+    }
+    else if(event.type == SDL_KEYUP) {
+        switch(event.key.keysym.sym) {
+            case SDLK_x: key[0] = 0; break;
+            case SDLK_a: key[1] = 0; break;
+            case SDLK_s: key[2] = 0; break;
+            case SDLK_d: key[3] = 0; break;
+            case SDLK_q: key[4] = 0; break;
+            case SDLK_w: key[5] = 0; break;
+            case SDLK_e: key[6] = 0; break;
+            case SDLK_1: key[7] = 0; break;
+            case SDLK_2: key[8] = 0; break;
+            case SDLK_3: key[9] = 0; break;
+            case SDLK_z: key[10] = 0; break;
+            case SDLK_c: key[11] = 0; break;
+            case SDLK_4: key[12] = 0; break;
+            case SDLK_r: key[13] = 0; break;
+            case SDLK_f: key[14] = 0; break;
+            case SDLK_v: key[15] = 0; break;
+        }
+    }
 }
 
 void close_SDL_window_glew()

@@ -176,6 +176,7 @@ void RET()
     printf("RET\n");
     PC = stack[SP];
     SP--;
+    PC += 2;
 }
 
 void JP(word address)
@@ -354,47 +355,24 @@ void RND_V_BYTE(byte reg, byte data)
 
 void DRW(byte reg_x, byte reg_y, byte lines)
 {
-    printf("DRW V%01X V%01X %02X\n", reg_x, reg_y, lines);
+    printf("DRW V%01X V%01X %02X\n", reg_y, reg_x, lines);
     //VF is set to 1 if there is a collision (ie a bit in the sprite changes)
     //otherwise it's zero
     V[0xF] = 0;
     byte pixel;
     int x, y;
 
-    /*printf("Try drawing sprite\n");
-    byte x, y;
-    byte tmp_p, tmp_m;
-    for(y = 0; y < lines; y++) {
-        tmp_p = memory[I + y] >> 4;
-        tmp_m = 0x8;
-        while(tmp_m) {
-            if(tmp_p & tmp_m) {
-                //draw block character thingy
-                printf("%c", 'X');
-            } else {
-                //draw space char
-                printf("%c", '.');
-            }
-            tmp_m >>= 1;
-        }
-        printf("\n");
-    }*/
     for(y = 0; y < lines; y++) {
         pixel = memory[I + y];
         for(x = 0; x < 8; x++) {
             if((pixel & (0x80 >> x)) != 0) {
-                if(screen[reg_y + y][reg_x + x] == 1)
+                if(screen[V[reg_y] + y][V[reg_x] + x] == 1)
                     V[0xF] = 1;                                 
-                screen[reg_y + y][reg_x + x] ^= 1;
-                
-                /*if(gfx[(reg_x + x + ((reg_y + y) * 64))] == 1)
-                    V[0xF] = 1;                                 
-                gfx[reg_x + x + ((reg_y + y) * 64)] ^= 1;*/
+                screen[V[reg_y] + y][V[reg_x] + x] ^= 1;
             }
         }
     }
     draw_flag = 1;
-    //print_screen();
 
     PC += 2;
 }
@@ -427,9 +405,8 @@ void LD_V_DT(byte reg)
 void LD_V_K(byte reg)
 {
     printf("LD V%01X K\n", reg);
-    byte i;
     byte pressed = 0;
-    for(i = 0; i < 16; i++) {
+    for(byte i = 0; i < 16; i++) {
         if(key[i] != 0)	{
             V[reg] = i;
             pressed = 1;
@@ -494,8 +471,7 @@ void LD_I_V(byte reg)
 void LD_V_I(byte reg)
 {
     printf("LD V%01X [I]\n", reg);
-    byte i;
-    for(i = 0; i <= reg; i++) {
+    for(byte i = 0; i <= reg; i++) {
         V[i] = memory[I + i];
     }
     PC += 2;

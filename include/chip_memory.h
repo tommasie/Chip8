@@ -16,6 +16,6 @@ extern const word START;
 //Alternate start address for ETI 660
 extern const word ETI_START;
 
-void load_game();
+void load_game(char* filename);
 
 #endif

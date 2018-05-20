@@ -13,6 +13,8 @@ void init_texture_glew();
 
 void update_texture_glew();
 
+void handle_input(SDL_Event event);
+
 void close_SDL_window_glew();
 
 #endif

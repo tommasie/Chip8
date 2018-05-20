@@ -1,12 +1,17 @@
 #include "chip_memory.h"
+#include <string.h>
 
 const word START = 0x200;
 const word ETI_START = 0x600;
 
-void load_game()
+void load_game(char* filename)
 {
     printf("Loading game...\n");
-    FILE* in = fopen("../games/pong.rom", "rb");
+    char path[1024] = "../games/";
+    strcat(path, filename);
+    strcat(path, ".rom");
+    printf("pathname: %s\n", path);
+    FILE* in = fopen(path, "rb");
     if(in == NULL) {
         fprintf(stderr, "Errore nella lettura del file");
         return;
