@@ -1,0 +1,14 @@
+Memory: 4kB;
+Architecture: 8-bit;
+opcodes: 35, 2 bytes long;
+Registers: 16 8-bit named Vx, x in [0,F], and 1 16-bit register I
+            I used to store addresses (12 bits long, stored in rightmost bits)
+            VF is unused by programs, used a falg store
+
+            2 special purpose 8-bit registers for sound and delay timers
+
+            PC is 2 bits
+            SP can be 1 bit(?)
+            The stack is an array of 16 16-bit values. Chip-8 allows for up to 16 levels of nested subroutines
+Display: 64x32 monochrome display; ( 0,0 ) ( 63,0 )
+                                   ( 0,31) ( 63,31)
