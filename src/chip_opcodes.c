@@ -6,6 +6,7 @@
 #include <string.h>
 #include <time.h>
 
+
 void decode_execute_opcode(word opcode)
 {
     switch(opcode & 0xF000) {
@@ -157,6 +158,11 @@ void decode_execute_opcode(word opcode)
             fprintf(stderr, "Uknown opcode %04X\n", opcode);
             break;
     }
+}
+
+void NOOP()
+{
+
 }
 
 void SYS(word address)

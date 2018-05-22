@@ -10,7 +10,6 @@ void load_game(char* filename)
     char path[1024] = "../games/";
     strcat(path, filename);
     strcat(path, ".rom");
-    printf("pathname: %s\n", path);
     FILE* in = fopen(path, "rb");
     if(in == NULL) {
         fprintf(stderr, "Errore nella lettura del file");

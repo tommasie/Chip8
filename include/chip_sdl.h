@@ -3,9 +3,7 @@
 
 #include "chip_structs.h"
 #include "SDL.h"
-#include "glew.h"
-#include "glut.h"
-#include "SDL_opengl.h"
+#include "glad.h"
 
 #define SCREEN_WIDTH 64
 #define SCREEN_HEIGHT 32
@@ -22,13 +20,21 @@ SDL_Window* window;
     
 SDL_GLContext gl_context;
 
-GLenum error;
+struct gl_data {
+    GLuint VAO;
+    GLuint VBO;
+    GLuint EBO;
+    GLuint texture;
+    GLuint shader_program;
+} data;
 
 void init_texture();
 
 void update_texture();
 
 int create_SDL_window();
+
+void handle_keyboard_event(SDL_Event event);
 
 void close_SDL_window();
 
